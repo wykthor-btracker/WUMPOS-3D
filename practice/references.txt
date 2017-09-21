@@ -1,0 +1,2 @@
+IA with PROLOG:
+https://www.cs.ru.nl/~peterl/teaching/CS3510/prolmanual.pdf
