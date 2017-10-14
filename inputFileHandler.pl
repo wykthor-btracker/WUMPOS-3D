@@ -29,6 +29,7 @@
 
 
 
+cls :- write('\e[2J').
 
 is_eof(FlHndl, CharCode, CurrentLine, FileAkku, FileContent) :-
         CharCode == -1,
@@ -69,4 +70,4 @@ copy(InputFile, OutputFile) :-
 onlyRead(InputFile) :-
     read_file(InputFile, InputLines),
     member(Line, InputLines),
-    write(Line), nl, !.
+    write(Line), nl, false.
