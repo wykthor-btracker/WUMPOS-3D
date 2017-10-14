@@ -29,6 +29,7 @@
 
 
 
+cls :- write('\e[2J').
 
 is_eof(FlHndl, CharCode, CurrentLine, FileAkku, FileContent) :-
         CharCode == -1,
