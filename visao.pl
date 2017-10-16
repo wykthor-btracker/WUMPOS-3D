@@ -1,13 +1,4 @@
-matriz(
-	[p,e,p,c,p,c,p,p,
-	 p,c,c,c,c,c,c,c,
-	 p,c,p,c,p,c,p,p,
-	 p,c,c,c,p,c,c,c,
-	 p,p,p,c,p,p,c,p,
-	 p,c,c,c,c,c,c,c,
-	 p,c,p,p,c,p,c,p,
-	 p,c,c,c,c,c,c,f]).
-
+:- include('matriz.pl').
 pegar(PosX,PosY,Size,R):-
 	R is PosX + (PosY * Size),
 	PosX < Size,
