@@ -10,7 +10,8 @@ matriz(
          p,c,c,c,c,c,c,f]).
 
 size(8).
-:- dynamic posicaoJogador/2.
-posicaoJogador(0,1).
+:- dynamic posicaoJogador/2,headingJogador/1.
+posicaoJogador(1,0).
+headingJogador(down).
 :- dynamic tile/1.
 tile(c).
