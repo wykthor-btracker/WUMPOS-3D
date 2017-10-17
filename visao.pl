@@ -56,4 +56,4 @@ current(String):-  posicaoJogador(PosX,PosY),
 l:-
 	current(String),
 	cls,
-	Readonly(String).
+	onlyRead(String).
