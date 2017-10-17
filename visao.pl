@@ -1,4 +1,4 @@
-:- include('matriz.pl').
+:- include('inputFileHandler.pl').
 pegar(PosX,PosY,Size,R):-
 	R is PosX + (PosY * Size),
 	PosX < Size,
@@ -18,10 +18,10 @@ info(0,[Head],Head).
 info(0,[Head|_],Head).
 info(Counter,[_|Tail],Rest):- NewCounter is Counter-1,info(NewCounter,Tail,Rest).
 
-steps(up,0).
-steps(right,1).
-steps(down,2).
-steps(left,3).
+steps(up,2).
+steps(right,3).
+steps(down,0).
+steps(left,1).
 			    
 adjacente(PosX,PosY,Size,R):-
 			    matriz(Maze),
@@ -35,10 +35,20 @@ adjacente(PosX,PosY,Size,R):-
 			    info(Right,Maze,RightInfo),
 			    R = [UpInfo,RightInfo,DownInfo,LeftInfo],!.
 grabTail([H|T],H,T).
-fix([H|T],Heading,Answer):-
+fix([H|T],Answer):-
+	headingJogador(Heading),
 	steps(Heading,Steps),
 	rotate(Steps,[H|T],_,R),
 	grabTail(R,_,Answer).
 
 rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
+look(PosX,PosY,Size,R):-
+	adjacente(PosX,PosY,Size,Adjacentes),
+	fix(Adjacentes,R).
+current:-  posicaoJogador(PosX,PosY),
+	   size(Size),
+	   adjacente(PosX,PosY,Size,Adjacentes),
+	   fix(Adjacentes,Perspective),atomic_list_concat(Perspective, '', Atom), 
+	   atom_string(Atom, String),
+	   cls, onlyRead(String).
