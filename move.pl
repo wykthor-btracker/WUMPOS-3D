@@ -29,14 +29,12 @@ goFront:-    posicaoJogador(PosX,PosY),
 	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
 	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),
-	     retract(headingJogador(_)),
-	     asserta(headingJogador(front)),!.
+	     asserta(matriz(EndMaze)),!.
 
 goRight:-    posicaoJogador(PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
-	     NewX is PosX-1,
+	     NewX is PosX+1,
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
@@ -48,9 +46,7 @@ goRight:-    posicaoJogador(PosX,PosY),
 	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
 	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),
-	     retract(headingJogador(_)),
-	     asserta(headingJogador(right)),!.
+	     asserta(matriz(EndMaze)),!.
 
 goBack:-    posicaoJogador(PosX,PosY),
 	     matriz(Maze),
@@ -67,14 +63,12 @@ goBack:-    posicaoJogador(PosX,PosY),
 	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
 	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),
-	     retract(headingJogador(_)),
-	     asserta(headingJogador(back)),!.
+	     asserta(matriz(EndMaze)),!.
 
 goLeft:-    posicaoJogador(PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
-	     NewX is PosX+1,
+	     NewX is PosX-1,
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
@@ -86,7 +80,25 @@ goLeft:-    posicaoJogador(PosX,PosY),
 	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
 	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),
-	     retract(headingJogador(_)),
-	     asserta(headingJogador(left)),!.
+	     asserta(matriz(EndMaze)),!.
+
+direction(left,3).
+direction(front,2).
+direction(right,1).
+direction(back,0).
+go(Dir):-
+	direction(Dir,Steps),
+	headingJogador(Heading),
+	direction(Heading,Spin),
+	Perspective is mod(Spin+Steps,4),
+	retract(headingJogador(Heading)),
+	direction(NewHeading,Perspective),
+	asserta(headingJogador(NewHeading)),
+	move(Perspective).
+
+move(0):- goBack.
+move(1):- goLeft.
+move(2):- goFront.
+move(3):- goRight.
+	
 

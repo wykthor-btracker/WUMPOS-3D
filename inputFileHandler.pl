@@ -17,7 +17,7 @@
 %% ------------------ main functions -------------------------------   %%
 %%                                                                     %%
 %% copy(InputFile, OutputFile) <- takes a file and make a copy of it   %%
-%% onlyRead(InputFile) <- print a file content                         %%
+%% Fread(InputFile) <- print a file content                            %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,7 +66,7 @@ copy(InputFile, OutputFile) :-
         close(OS)
     ).
 
-onlyRead(InputFile) :-
+fRead(InputFile) :-
     read_file(InputFile, InputLines),
     member(Line, InputLines),
     write(Line ), nl, 

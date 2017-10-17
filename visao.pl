@@ -18,11 +18,11 @@ info(0,[Head],Head).
 info(0,[Head|_],Head).
 info(Counter,[_|Tail],Rest):- NewCounter is Counter-1,info(NewCounter,Tail,Rest).
 
-steps(back,2).
-steps(right,3).
-steps(front,0).
-steps(left,1).
-			    
+steps(front,0).  
+steps(left,3).  
+steps(back,2).                   
+steps(right,1). 			    
+
 adjacente(PosX,PosY,Size,R):-
 			    matriz(Maze),
 			    pegarBack(PosX,PosY,Size,Back),
@@ -56,4 +56,4 @@ current(String):-  posicaoJogador(PosX,PosY),
 l:-
 	current(String),
 	cls,
-	onlyRead(String).
+	fRead(String).
