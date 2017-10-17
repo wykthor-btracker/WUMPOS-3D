@@ -62,12 +62,12 @@ copy(InputFile, OutputFile) :-
         member(Line, InputLines),
         write(Line), nl,
         write(OS,Line),nl(OS),
-        false
-        ;
+        false;
         close(OS)
     ).
 
 onlyRead(InputFile) :-
     read_file(InputFile, InputLines),
     member(Line, InputLines),
-    write(Line), nl,false.
+    write(Line ), nl, 
+    false;true.
