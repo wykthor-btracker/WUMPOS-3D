@@ -70,4 +70,4 @@ copy(InputFile, OutputFile) :-
 onlyRead(InputFile) :-
     read_file(InputFile, InputLines),
     member(Line, InputLines),
-    write(Line), nl, false.
+    write(Line), nl,false.
