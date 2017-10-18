@@ -81,24 +81,24 @@ goLeft:-    posicaoJogador(PosX,PosY),
 	     replace(MidMaze,Rold,Tile,EndMaze),
 	     retract(matriz(Maze)),
 	     asserta(matriz(EndMaze)),!.
-
-direction(left,3).
-direction(front,2).
+                   
+direction(back,2).
 direction(right,1).
-direction(back,0).
+direction(front,0).
+direction(left,3). 
 go(Dir):-
 	direction(Dir,Steps),
 	headingJogador(Heading),
 	direction(Heading,Spin),
 	Perspective is mod(Spin+Steps,4),
-	retract(headingJogador(Heading)),
 	direction(NewHeading,Perspective),
-	asserta(headingJogador(NewHeading)),
-	move(Perspective).
+	move(Perspective),
+	retract(headingJogador(Heading)),
+	asserta(headingJogador(NewHeading)).
 
-move(0):- goBack.
+move(2):- goBack.
 move(1):- goLeft.
-move(2):- goFront.
+move(0):- goFront.
 move(3):- goRight.
 	
 
