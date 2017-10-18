@@ -48,12 +48,11 @@ look(PosX,PosY,Size,R):-
 	adjacente(PosX,PosY,Size,Adjacentes),
 	fix(Adjacentes,R).
 
-current(String):-  posicaoJogador(PosX,PosY),
+current:-  posicaoJogador(PosX,PosY),
 	   size(Size),
 	   adjacente(PosX,PosY,Size,Adjacentes),
 	   fix(Adjacentes,Perspective),atomic_list_concat(Perspective, '', Atom), 
-	   atom_string(Atom, String).
-l:-
-	current(String),
-	cls,
-	fRead(String).
+	   atom_string(Atom, String),
+	   cls,
+	   fRead(String),
+	   !.
