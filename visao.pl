@@ -44,6 +44,7 @@ fix([H|T],Answer):-
 rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
 rotate(_,_,_,_).
+
 look(PosX,PosY,Size,R):-
 	adjacente(PosX,PosY,Size,Adjacentes),
 	fix(Adjacentes,R).
@@ -51,7 +52,9 @@ look(PosX,PosY,Size,R):-
 current:-  posicaoJogador(PosX,PosY),
 	   size(Size),
 	   adjacente(PosX,PosY,Size,Adjacentes),
-	   fix(Adjacentes,Perspective),atomic_list_concat(Perspective, '', Atom), 
+	   fix(Adjacentes,Perspective),
+	   (check,append(Perspective,[v],PerspectiveV),atomic_list_concat(PerspectiveV, '', Atom);
+	    atomic_list_concat(Perspective, '', Atom)),
 	   atom_string(Atom, String),
 	   cls,
 	   fRead(String),
