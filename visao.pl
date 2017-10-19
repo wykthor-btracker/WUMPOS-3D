@@ -38,8 +38,7 @@ grabTail([H|T],H,T).
 fix([H|T],Answer):-
 	headingJogador(Heading),
 	steps(Heading,Steps),
-	rotate(Steps,[H|T],_,R),
-	grabTail(R,_,Answer).
+	rotate(Steps,[H|T],_,Answer).
 
 rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
