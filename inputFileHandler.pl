@@ -17,7 +17,7 @@
 %% ------------------ main functions -------------------------------   %%
 %%                                                                     %%
 %% copy(InputFile, OutputFile) <- takes a file and make a copy of it   %%
-%% Fread(InputFile) <- print a file content                            %%
+%% fread(InputFile) <- print a file content                            %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
