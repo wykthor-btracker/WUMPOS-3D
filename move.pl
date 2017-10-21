@@ -94,7 +94,7 @@ go(Dir,Agent):-
 	direction(NewHeading,Perspective),
 	move(Perspective,Agent),
 	retract(heading(Agent,Heading)),
-	asserta(heading(Agent,NewHeading)).
+	asserta(heading(Agent,NewHeading)),!.
 
 move(2,Agent):- goBack(Agent).
 move(1,Agent):- goLeft(Agent).

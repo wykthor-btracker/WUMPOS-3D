@@ -51,7 +51,7 @@ rotate(_,_,_,_).
 monsterHere(Agent):-
 	posicao(Agent,PosX,PosY),
 	posicao(monstro,PosX,PosY).
-	
+
 current(Agent):-  posicao(Agent,PosX,PosY),
 	   size(Size),
 	   adjacente(PosX,PosY,Size,IndAdjacentes),
