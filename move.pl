@@ -5,101 +5,100 @@ replace([_|T], 0, X, [X|T]).
 replace([H|T], I, X, [H|R]):- I > -1, NI is I-1, replace(T, NI, X, R), !.
 replace(L, _, _, L).
 validMove(c).
+validMove(j).
 opposites(left,right).
 opposites(front,back).
 opposites(X,Y):- opposites(Y,X).
 
-turnAround:-
-	headingJogador(Heading),
+turnAround(Agent):-
+	heading(Heading),
 	opposites(Heading,Newheading),
-	retract(headingJogador(Heading)),
-	asserta(headingJogador(Newheading)).
+	retract(heading(Agent,Heading)),
+	asserta(heading(Agent,Newheading)),!.
 
-goFront:-    posicaoJogador(PosX,PosY),
+goFront(Agent):-    
+	     posicao(Agent,PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
 	     NewY is PosY+1,
 	     pegar(PosX,NewY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     retract(posicaoJogador(PosX,PosY)),
-	     asserta(posicaoJogador(PosX,NewY)),
+	     tile(Agent,Tile),
 	     pegar(PosX,PosY,MazeSize,Rold),
 	     replace(Maze,Rnew,j,MidMaze),
-	     retract(tile(Tile)),
-	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
-	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),!.
+	     update(Agent,PosX,NewY,Newtile,EndMaze).
 
-goRight:-    posicaoJogador(PosX,PosY),
+goRight(Agent):-    
+	     posicao(Agent,PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
 	     NewX is PosX+1,
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     retract(posicaoJogador(PosX,PosY)),
-	     asserta(posicaoJogador(NewX,PosY)),
+	     tile(Agent,Tile),
 	     pegar(PosX,PosY,MazeSize,Rold),
 	     replace(Maze,Rnew,j,MidMaze),
-	     retract(tile(Tile)),
-	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
-	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),!.
+	     update(Agent,NewX,PosY,Newtile,EndMaze).
 
-goBack:-    posicaoJogador(PosX,PosY),
+
+goBack(Agent):-    
+	     posicao(Agent,PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
 	     NewY is PosY-1,
 	     pegar(PosX,NewY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     retract(posicaoJogador(PosX,PosY)),
-	     asserta(posicaoJogador(PosX,NewY)),
+	     tile(Agent,Tile),
 	     pegar(PosX,PosY,MazeSize,Rold),
 	     replace(Maze,Rnew,j,MidMaze),
-	     retract(tile(Tile)),
-	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
-	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),!.
+	     update(Agent,PosX,NewY,Newtile,EndMaze).
 
-goLeft:-    posicaoJogador(PosX,PosY),
+goLeft(Agent):-    
+	     posicao(Agent,PosX,PosY),
 	     matriz(Maze),
 	     size(MazeSize),
 	     NewX is PosX-1,
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     retract(posicaoJogador(PosX,PosY)),
-	     asserta(posicaoJogador(NewX,PosY)),
+	     tile(Agent,Tile),
 	     pegar(PosX,PosY,MazeSize,Rold),
 	     replace(Maze,Rnew,j,MidMaze),
-	     retract(tile(Tile)),
-	     asserta(tile(Newtile)),
 	     replace(MidMaze,Rold,Tile,EndMaze),
-	     retract(matriz(Maze)),
-	     asserta(matriz(EndMaze)),!.
-                   
+	     update(Agent,NewX,PosY,Newtile,EndMaze).
+
+update(Agente,NewX,NewY,Newtile,NewMaze):-
+	retract(posicao(Agente,_,_)),
+	asserta(posicao(Agente,NewX,NewY)),
+	retract(tile(Agente,_)),
+	asserta(tile(Agente,Newtile)),
+	retract(matriz(_)),
+	asserta(matriz(NewMaze)),!.
+
 direction(back,2).
 direction(right,1).
 direction(front,0).
-direction(left,3). 
-go(Dir):-
+direction(left,3).
+
+go(Dir,Agent):-
 	direction(Dir,Steps),
-	headingJogador(Heading),
+	heading(Agent,Heading),
 	direction(Heading,Spin),
 	Perspective is mod(Spin+Steps,4),
 	direction(NewHeading,Perspective),
-	move(Perspective),
-	retract(headingJogador(Heading)),
-	asserta(headingJogador(NewHeading)).
+	move(Perspective,Agent),
+	retract(heading(Agent,Heading)),
+	asserta(heading(Agent,NewHeading)).
 
-move(2):- goBack.
-move(1):- goLeft.
-move(0):- goFront.
-move(3):- goRight.
+move(2,Agent):- goBack(Agent).
+move(1,Agent):- goLeft(Agent).
+move(0,Agent):- goFront(Agent).
+move(3,Agent):- goRight(Agent).
 	
 
