@@ -24,19 +24,23 @@ steps(back,2).
 steps(right,1). 			    
 
 adjacente(PosX,PosY,Size,R):-
-			    matriz(Maze),
-			    pegarBack(PosX,PosY,Size,Back),
-			    info(Back,Maze,BackInfo),
-			    pegarFront(PosX,PosY,Size,Front),
-			    info(Front,Maze,FrontInfo),
-			    pegarLeft(PosX,PosY,Size,Left),
-			    info(Left,Maze,LeftInfo),
-			    pegarRight(PosX,PosY,Size,Right),
-			    info(Right,Maze,RightInfo),
-			    R = [BackInfo,RightInfo,FrontInfo,LeftInfo],!.
+	    pegarBack(PosX,PosY,Size,Back),
+	    pegarFront(PosX,PosY,Size,Front),
+	    pegarLeft(PosX,PosY,Size,Left),
+	    pegarRight(PosX,PosY,Size,Right),
+	    R = [Back,Right,Front,Left],!.
+
+infoAdjacente([Back,Right,Front,Left],R):-
+	matriz(Maze),
+	info(Back,Maze,BackInfo),
+	info(Right,Maze,RightInfo),
+	info(Front,Maze,FrontInfo),
+	info(Left,Maze,LeftInfo),
+	R = [BackInfo,RightInfo,FrontInfo,LeftInfo],!.
+
 grabTail([H|T],H,T).
-fix([H|T],Answer):-
-	headingJogador(Heading),
+fix(Agent,[H|T],Answer):-
+	heading(Agent,Heading),
 	steps(Heading,Steps),
 	rotate(Steps,[H|T],_,Answer).
 
@@ -44,16 +48,20 @@ rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
 rotate(_,_,_,_).
 
-look(PosX,PosY,Size,R):-
-	adjacente(PosX,PosY,Size,Adjacentes),
-	fix(Adjacentes,R).
-
-current:-  posicaoJogador(PosX,PosY),
+monsterHere(Agent):-
+	posicao(Agent,PosX,PosY),
+	posicao(monstro,PosX,PosY).
+	
+current(Agent):-  posicao(Agent,PosX,PosY),
 	   size(Size),
-	   adjacente(PosX,PosY,Size,Adjacentes),
-	   fix(Adjacentes,Perspective),
-	   (check,append(Perspective,[v],PerspectiveV),atomic_list_concat(PerspectiveV, '', Atom);
-	    atomic_list_concat(Perspective, '', Atom)),
+	   adjacente(PosX,PosY,Size,IndAdjacentes),
+	   infoAdjacente(IndAdjacentes,Adjacentes),
+	   fix(Agent,Adjacentes,Perspective),
+	   (check(Agent),append(Perspective,[v],PerspectiveV),atomic_list_concat(PerspectiveV, '', Atom)
+	   ;
+	   (monsterHere(jogador),append(Perspective,[m],PerspectiveM),atomic_list_concat(PerspectiveM, '', Atom))
+	   ;
+	   atomic_list_concat(Perspective, '',Atom)),
 	   atom_string(Atom, String),
 	   cls,
 	   fRead(String),
