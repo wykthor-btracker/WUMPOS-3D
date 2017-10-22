@@ -39,6 +39,9 @@ start(_) :-
 process('quit') :-
 				start('quit'),
 				!.
+process('look') :-
+					    current(jogador),
+					    start('start').
 process(Y) :-
 		   checkInput(Y),
 	       go(Y, jogador),
