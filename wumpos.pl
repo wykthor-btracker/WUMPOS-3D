@@ -4,6 +4,10 @@
 :- include('colorLife.pl').
 
 
+
+
+
+
 wumpos :- 
 	    load,
 	    title,
@@ -39,7 +43,7 @@ process(Y) :-
 		   checkInput(Y),
 	       go(Y, jogador),
     	   current(jogador),
-    	   set(jogador),            <- waiting visited rooms files 
+    	   set(jogador),             
 	       start('start').
 
 checkInput('left').
