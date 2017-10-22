@@ -6,7 +6,7 @@ check(Agent):- posicao(Agent,X,Y),
 	member([X,Y],List).
 
 set(Agent):- posicao(Agent,X,Y),
-      \+check,
+      \+check(jogador),
       append([[X,Y]],List,R),
       retract(visited(List)),
       asserta(visited(R)).
