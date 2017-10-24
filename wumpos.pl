@@ -1,15 +1,10 @@
 :- use_module(library(readln)).
+:- include('colorLife.pl').
 :- include('move.pl').
 %:- include('inputUserHandler.pl').    <- still in beta
-:- include('colorLife.pl').
-
-
-
-
-
 
 wumpos :- 
-	    load,
+	    load(3),
 	    title,
 	    tutorial,
 	    ask.
@@ -23,7 +18,7 @@ ask :-
 start('quit') :- 
                write('Bye Bye'),
                nl,
-               !.
+               abort.
 
 start('start') :-
                write('which way do you wanna go ?'),
@@ -40,14 +35,17 @@ process('quit') :-
 				start('quit'),
 				!.
 process('look') :-
-					    current(jogador),
-					    start('start').
+			    current(jogador),
+			    start('start').
 process(Y) :-
 		   checkInput(Y),
 	       go(Y, jogador),
-    	   current(jogador),
-    	   set(jogador),             
-	       start('start').
+    	   current(jogador),(
+		   \+check(jogador),
+    	   set(jogador),
+		   start('start')
+		   ;		   
+	       start('start')).
 
 checkInput('left').
 checkInput('right').
@@ -57,19 +55,30 @@ checkInput(_) :-
  		 write('Huh?... are you mentally challenged?'),
 		 nl,
 		 start('start').
-
-load :-
+load(0).
+load(X):-
+	  X1 is X - 1,
       cls,
 	  fRead('./sprite/load1'),
 	  cls,
-	  sleep(1),
+	  sleep(0.2),
 	  fRead('./sprite/load2'),
 	  cls,
-	  sleep(1),
+	  sleep(0.2),
 	  fRead('./sprite/load3'),
 	  cls,
-	  sleep(1).
-
+	  sleep(0.2),
+	  cls,
+	  fRead('./sprite/load3'),
+	  cls,
+	  sleep(0.2),
+	  fRead('./sprite/load2'),
+	  cls,
+	  sleep(0.2),
+	  fRead('./sprite/load1'),
+	  cls,
+	  sleep(0.2),
+	  load(X1).
 title :-
 	   cls,
 	   fRead(title).
@@ -110,7 +119,7 @@ choice('yes') :-
 choice('no'). 
 
 choice('quit') :-
-				false.
+				abort.
 choice(_) :-
 		   write('Huh ?, cant you even answer such a simple question ?'),
 		   nl,
