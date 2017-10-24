@@ -11,7 +11,7 @@ opposites(front,back).
 opposites(X,Y):- opposites(Y,X).
 
 turnAround(Agent):-
-	heading(Heading),
+	heading(Agent,Heading),
 	opposites(Heading,Newheading),
 	retract(heading(Agent,Heading)),
 	asserta(heading(Agent,Newheading)),!.
