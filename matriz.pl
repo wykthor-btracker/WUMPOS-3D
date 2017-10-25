@@ -26,3 +26,4 @@ heading(monstro,back).
 :- dynamic tile/2.
 tile(jogador,c).
 tile(monstro,c).
+saida(15,9).
