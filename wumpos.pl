@@ -32,8 +32,8 @@ start(_) :-
          start('start').
 
 process('quit') :-
-                start('quit'),
-                !.
+                start('quit').
+                
 process('look') :-
                 current(jogador),
                 start('start').
