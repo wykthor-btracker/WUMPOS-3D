@@ -43,6 +43,8 @@ process('trace') :-
                  read(Y),
                  process(Y).
 
+process('end_of_file') :- abort.
+
 process(Y) :-
            checkInput(Y),
            go(Y, jogador),
