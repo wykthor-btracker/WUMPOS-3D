@@ -33,10 +33,16 @@ start(_) :-
 
 process('quit') :-
                 start('quit').
-                
+
 process('look') :-
                 current(jogador),
                 start('start').
+
+process('trace') :-
+                 trace,
+                 read(Y),
+                 process(Y).
+
 process(Y) :-
            checkInput(Y),
            go(Y, jogador),
