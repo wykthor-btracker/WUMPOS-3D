@@ -41,8 +41,7 @@ infoAdjacente([Back,Right,Front,Left],R):-
 grabTail([H|T],H,T).
 fix(Heading,[H|T],Answer):-
 	steps(Heading,Steps),
-	NewSteps is Steps+1,
-	rotate(NewSteps,[H|T],_,Answer).
+	rotate(Steps,[H|T],_,Answer).
 
 rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
@@ -51,9 +50,16 @@ rotate(_,_,_,_).
 monsterHere(PosX,PosY):-
 	posicao(monstro,PosX,PosY).
 
-current(PosX,PosY,Heading,Perspective):-
+current(PosX,PosY,Heading):-
 	   size(Size),
 	   adjacente(PosX,PosY,Size,IndAdjacentes),
 	   infoAdjacente(IndAdjacentes,Adjacentes),
 	   fix(Heading,Adjacentes,Perspective),
+           (
+           (monsterHere(PosX,PosY),append(Perspective,[m],PerspectiveM),atomic_list_concat(PerspectiveM, '', Atom))
+           ;
+           atomic_list_concat(Perspective, '',Atom)),
+           atom_string(Atom, String),
+           cls,
+           fRead(String),
 	   !.

@@ -1,12 +1,6 @@
-:- dynamic visited/1.
-visited([]).
-
-check(X,Y):-
-	visited(List),
+check(X,Y,List):-
 	member([X,Y],List).
 
-set(X,Y):- 
-      \+check(X,Y),
-      append([[X,Y]],List,R),
-      retract(visited(List)),
-      asserta(visited(R)).
+set(X,Y,List,R):- 
+      \+check(X,Y,List),
+      append([[X,Y]],List,R).
