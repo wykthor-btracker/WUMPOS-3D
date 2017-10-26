@@ -102,4 +102,11 @@ move(1,Agent):- goLeft(Agent).
 move(0,Agent):- goFront(Agent).
 move(3,Agent):- goRight(Agent).
 	
-
+run([]).
+run([_]).
+run([Head|Tail]):- 
+        current(jogador),
+        go(Head,jogador),
+        sleep(1),
+        current(jogador),
+        run(Tail).
