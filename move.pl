@@ -107,6 +107,5 @@ run([_]).
 run([Head|Tail]):- 
         current(jogador),
         go(Head,jogador),
-        sleep(1),
         current(jogador),
         run(Tail).

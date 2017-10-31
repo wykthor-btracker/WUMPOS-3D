@@ -58,7 +58,7 @@ go(Dir,Heading,PosX,PosY,NewHeading,NewX,NewY):-
 	move(Perspective,PosX,PosY,NewX,NewY).
 
 move(2,PosX,PosY,PosX,NewY):- goBack(PosX,PosY,PosX,NewY).
-move(1,PosX,PosY,NewX,PosY):- goLeft(PosX,PosY,NewX,posY).
+move(1,PosX,PosY,NewX,PosY):- goLeft(PosX,PosY,NewX,PosY).
 move(0,PosX,PosY,PosX,NewY):- goFront(PosX,PosY,PosX,NewY).
 move(3,PosX,PosY,NewX,PosY):- goRight(PosX,PosY,NewX,PosY).	
 
