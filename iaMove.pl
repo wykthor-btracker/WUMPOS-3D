@@ -1,15 +1,5 @@
-:- include('matriz.pl').
 :- include('iaVisao.pl').
 :- include('iaVisited.pl').
-replace([_|T], 0, X, [X|T]).
-replace([H|T], I, X, [H|R]):- I > -1, NI is I-1, replace(T, NI, X, R), !.
-replace(L, _, _, L).
-validMove(c).
-validMove(j).
-validMove(f).
-opposites(left,right).
-opposites(front,back).
-opposites(X,Y):- opposites(Y,X).
 
 turnAround(Heading,Newheading):- opposites(Heading,Newheading),!.
 
@@ -45,10 +35,6 @@ goLeft(PosX,PosY,NewX,PosY):-
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile).
 
-direction(back,2).
-direction(right,1).
-direction(front,0).
-direction(left,3).
 
 go(Dir,Heading,PosX,PosY,NewHeading,NewX,NewY):-
 	direction(Dir,Steps),
