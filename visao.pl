@@ -51,6 +51,13 @@ rotate(_,_,_,_).
 monsterHere(Agent):-
 	posicao(Agent,PosX,PosY),
 	posicao(monstro,PosX,PosY).
+monsterAround(Agent):-
+	size(Size),
+	posicao(Agent,PosX,PosY),
+	adjacente(PosX,PosY,Size,R),
+	posicao(monstro,MonsX,MonsY),
+	pegar(MonsX,MonsY,Size,R1),
+	member(R1,R).
 
 current(Agent):-  posicao(Agent,PosX,PosY),
 	   size(Size),
@@ -65,4 +72,5 @@ current(Agent):-  posicao(Agent,PosX,PosY),
 	   atom_string(Atom, String),
 	   cls,
 	   fRead(String),
+	   checkMonster(Agent),
 	   !.

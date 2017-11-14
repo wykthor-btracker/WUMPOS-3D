@@ -4,7 +4,7 @@
 %:- include('inputUserHandler.pl').    <- still in beta
 
 wumpos :- 
-        load(3),
+        load(2),
         title,
         tutorial,
         ask.
@@ -48,6 +48,7 @@ process('end_of_file') :- abort.
 process(Y) :-
            checkInput(Y),
            go(Y, jogador),
+	   moveMonster,
            current(jogador),(
            \+check(jogador),
            set(jogador),
@@ -55,12 +56,22 @@ process(Y) :-
            ;           
            start('start')).
 
+checkMonster(Agent):-
+	monsterAround(Agent),
+	Text = 'Você sente um odor pútrido vindo das redondezas',
+	fancyWrite(yellow,Text),nl.
+checkMonster(Agent):-
+	monsterHere(Agent),
+	Text = 'VOCE PERDEU',
+	fancyWrite(red, Text),nl,
+	abort.
+checkMonster(_).
+
 checkInput('left').
 checkInput('right').
 checkInput('front').
 checkInput('back').
 checkInput(_) :-
-         write('Huh?... are you mentally challenged?'),
          nl,
          start('start').
 load(0).
@@ -109,8 +120,8 @@ choice('yes') :-
               F = ' ALONE ',
               G = 'in this maze',
               H = ' as soon as you are ready type start, and the game shall begin',
-              I = ' if you feel like giving up like the little bitch you are just type quit, and thats it for the tutorial', 
-              J = ' (as soon as the misterious man finishes talking he disapears in the air) ',
+              I = ' if you feel like giving up just type quit, and thats it for the tutorial', 
+              J = ' (as soon as the misterious voice finishes talking it fades into silence) ',
               fancyWrite(red, A),
               fancyWrite(black, B),
               fancyWrite(red, C),
@@ -129,7 +140,7 @@ choice('no').
 choice('quit') :-
                 abort.
 choice(_) :-
-           write('Huh ?, cant you even answer such a simple question ?'),
+           write('Huh ?, can\'t you even answer such a simple question ?'),
            nl,
            tutorial. 
 

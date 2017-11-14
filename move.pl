@@ -5,7 +5,6 @@ replace([_|T], 0, X, [X|T]).
 replace([H|T], I, X, [H|R]):- I > -1, NI is I-1, replace(T, NI, X, R), !.
 replace(L, _, _, L).
 validMove(c).
-validMove(j).
 validMove(f).
 opposites(left,right).
 opposites(front,back).
@@ -25,11 +24,7 @@ goFront(Agent):-
 	     pegar(PosX,NewY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     tile(Agent,Tile),
-	     pegar(PosX,PosY,MazeSize,Rold),
-	     replace(Maze,Rnew,j,MidMaze),
-	     replace(MidMaze,Rold,Tile,EndMaze),
-	     update(Agent,PosX,NewY,Newtile,EndMaze).
+	     update(Agent,PosX,NewY,Newtile).
 
 goRight(Agent):-    
 	     posicao(Agent,PosX,PosY),
@@ -39,11 +34,7 @@ goRight(Agent):-
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     tile(Agent,Tile),
-	     pegar(PosX,PosY,MazeSize,Rold),
-	     replace(Maze,Rnew,j,MidMaze),
-	     replace(MidMaze,Rold,Tile,EndMaze),
-	     update(Agent,NewX,PosY,Newtile,EndMaze).
+	     update(Agent,NewX,PosY,Newtile).
 
 
 goBack(Agent):-    
@@ -54,11 +45,7 @@ goBack(Agent):-
 	     pegar(PosX,NewY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     tile(Agent,Tile),
-	     pegar(PosX,PosY,MazeSize,Rold),
-	     replace(Maze,Rnew,j,MidMaze),
-	     replace(MidMaze,Rold,Tile,EndMaze),
-	     update(Agent,PosX,NewY,Newtile,EndMaze).
+	     update(Agent,PosX,NewY,Newtile).
 
 goLeft(Agent):-    
 	     posicao(Agent,PosX,PosY),
@@ -68,19 +55,13 @@ goLeft(Agent):-
 	     pegar(NewX,PosY,MazeSize,Rnew),
 	     info(Rnew,Maze,Newtile),
 	     validMove(Newtile),
-	     tile(Agent,Tile),
-	     pegar(PosX,PosY,MazeSize,Rold),
-	     replace(Maze,Rnew,j,MidMaze),
-	     replace(MidMaze,Rold,Tile,EndMaze),
-	     update(Agent,NewX,PosY,Newtile,EndMaze).
+	     update(Agent,NewX,PosY,Newtile).
 
-update(Agente,NewX,NewY,Newtile,NewMaze):-
+update(Agente,NewX,NewY,Newtile):-
 	retract(posicao(Agente,_,_)),
 	asserta(posicao(Agente,NewX,NewY)),
 	retract(tile(Agente,_)),
-	asserta(tile(Agente,Newtile)),
-	retract(matriz(_)),
-	asserta(matriz(NewMaze)),!.
+	asserta(tile(Agente,Newtile)),!.
 
 direction(back,2).
 direction(right,1).
@@ -110,3 +91,9 @@ run([Head|Tail]):-
         go(Head,jogador),
         current(jogador),
         run(Tail).
+
+moveMonster:-
+	random_member(Dir,[left,right,front,back]),
+	go(Dir,monstro).
+
+
