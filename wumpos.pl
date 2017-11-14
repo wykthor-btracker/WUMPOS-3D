@@ -48,8 +48,8 @@ process('end_of_file') :- abort.
 process(Y) :-
            checkInput(Y),
            go(Y, jogador),
-	   moveMonster,
-           current(jogador),(
+           current(jogador),
+           moveMonster,(
            \+check(jogador),
            set(jogador),
            start('start')
@@ -57,14 +57,14 @@ process(Y) :-
            start('start')).
 
 checkMonster(Agent):-
-	monsterAround(Agent),
-	Text = 'Você sente um odor pútrido vindo das redondezas',
-	fancyWrite(yellow,Text),nl.
+  monsterAround(Agent),
+  Text = 'Você sente um odor pútrido vindo das redondezas',
+  fancyWrite(yellow,Text),nl.
 checkMonster(Agent):-
-	monsterHere(Agent),
-	Text = 'VOCE PERDEU',
-	fancyWrite(red, Text),nl,
-	abort.
+  monsterHere(Agent),
+  Text = 'VOCE PERDEU',
+  fancyWrite(red, Text),nl,
+  abort.
 checkMonster(_).
 
 checkInput('left').
