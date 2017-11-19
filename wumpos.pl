@@ -5,11 +5,11 @@
 %:- include('inputUserHandler.pl').    <- still in beta
 
 wumpos :- 
-        load(1.5),
-	playSound('sound.wav'),
+        load(1),
         title,
         tutorial,
-        ask.
+        ask,
+        playSound('sound.wav').
 
 ask :- 
     write('Type command: '),
