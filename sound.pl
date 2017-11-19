@@ -1,2 +1,7 @@
+
+
 playSound(Sound):-
-		shell('aplay sound.wav').
+		Player = 'aplay ',
+		string_concat(Player,Sound,Command),
+%		write(Command),
+		shell(Command).
