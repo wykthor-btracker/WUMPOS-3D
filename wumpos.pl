@@ -1,10 +1,12 @@
 :- use_module(library(readln)).
 :- include('colorLife.pl').
 :- include('move.pl').
+:- include('sound.pl').
 %:- include('inputUserHandler.pl').    <- still in beta
 
 wumpos :- 
-        load(2),
+        load(1.5),
+	playSound('sound.wav'),
         title,
         tutorial,
         ask.
