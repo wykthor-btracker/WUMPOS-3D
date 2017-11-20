@@ -141,6 +141,10 @@ choice('no').
 
 choice('quit') :-
                 abort.
+
+choice('start') :-
+                 start('start').
+
 choice(_) :-
            write('Huh ?, can\'t you even answer such a simple question ?'),
            nl,
