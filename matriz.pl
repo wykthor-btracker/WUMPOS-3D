@@ -20,7 +20,7 @@ matriz(
 size(16).
 :- dynamic posicao/3,heading/2.
 posicao(jogador,1,2).
-posicao(monstro,1,3).
+posicao(monstro,1,10).
 heading(jogador,front).
 heading(monstro,back).
 :- dynamic tile/2.
