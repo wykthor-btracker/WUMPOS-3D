@@ -59,15 +59,24 @@ process(Y) :-
            start('start')).
 
 checkMonster(Agent):-
-  monsterAround(Agent),
-  Text = 'Você sente um odor pútrido vindo das redondezas',
-  fancyWrite(yellow,Text),nl.
+                   monsterAround(Agent),
+                   Text = 'Você sente um odor pútrido vindo das redondezas',
+                   fancyWrite(yellow,Text),nl.
+
 checkMonster(Agent):-
-  monsterHere(Agent),
-  Text = 'VOCE PERDEU',
-  fancyWrite(red, Text),nl,
-  abort.
+                   monsterHere(Agent),
+                   Text = 'VOCE PERDEU',
+                   fancyWrite(red, Text),nl,
+                   abort.
 checkMonster(_).
+
+plankCheck(Agent):-
+                  plankHere(Agent),
+                  Text = 'Apos vasculhar essa sala voce encontrou uma TASBOA',
+                  fancyWrite(blue, Text),nl,
+                  Text1 = 'Uma TASBOA foi adicionada a seu inventario',
+                  fancyWrite(green, Text1),nl.
+plankCheck(_).
 
 checkInput('left').
 checkInput('right').
