@@ -23,6 +23,7 @@ posicao(jogador,1,2).
 posicao(monstro,1,10).
 posicao(plank,2,3).
 posicao(plank,3,2).
+posicao(hole,1,5).
 heading(jogador,front).
 heading(monstro,back).
 inventory(jogador,0).

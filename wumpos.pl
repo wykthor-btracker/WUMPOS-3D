@@ -78,6 +78,15 @@ plankCheck(Agent):-
                   fancyWrite(green, Text1),nl.
 plankCheck(_).
 
+holeCheck(Agent):-
+                 holeHere(Agent),
+                 Text = 'There is a hole on the ground ',
+                 fancyWrite(yellow, Text),
+                 Text1 = 'YOU SHALL NOT PASS!!!',
+                 fancyWrite(red, Text1),nl.
+
+holeCheck(_).
+
 checkInput('left').
 checkInput('right').
 checkInput('front').
