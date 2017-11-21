@@ -94,7 +94,7 @@ move(3,Agent):- goRight(Agent).
 run([]).
 run([_]).
 run([Head|Tail]):- 
-    sleep(0.1),
+    sleep(0.3),
         current(jogador),
         go(Head,jogador),
         set(jogador),

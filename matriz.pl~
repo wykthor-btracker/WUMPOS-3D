@@ -5,7 +5,7 @@ matriz(
          p,c,p,c,p,c,p,p,c,c,p,c,p,c,p,p,
          p,c,c,p,p,c,c,c,p,c,c,c,p,c,c,c,
          p,c,p,c,p,p,c,p,p,p,p,c,p,p,p,p,
-         p,c,p,c,c,p,c,c,p,c,c,c,c,c,c,c,
+         p,b,p,c,c,p,c,c,p,c,c,c,c,c,c,c,
          p,c,c,p,c,p,c,p,p,c,p,p,p,p,p,p,
          p,c,p,c,c,c,c,c,c,c,c,c,c,c,c,c,
          p,c,p,c,p,c,p,p,p,c,p,p,p,c,p,p,
@@ -31,9 +31,3 @@ inventory(jogador,0).
 tile(jogador,c).
 tile(monstro,c).
 saida(1,15).
-
-
-
-
-
-
