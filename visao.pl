@@ -88,7 +88,7 @@ current(Agent):-  posicao(Agent,PosX,PosY),
        atom_string(Atom, String),
        cls,
        fRead(String),
-       holeCheck(Agent),
+    %  holeCheck(Agent),
        checkMonster(Agent),
        plankCheck(Agent),
        !.
