@@ -99,7 +99,7 @@ run([Head|Tail]):-
         go(Head,jogador),
         set(jogador),
         current(jogador),
-        moveMonster,
+    %   moveMonster,         % <- essa linha buga o dfs
         run(Tail).
 
 moveMonster:-
