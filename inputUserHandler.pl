@@ -1,5 +1,6 @@
 :- use_module(library(pce)).
 :- include('wumpos.pl').
+:- include('ia.pl').
 
 
 
@@ -19,6 +20,7 @@ initialise(W, Label:[name]) :->
         send(W, append(button(front))),
         send(W, append(button(back))),
         send(W, append(button(quit))),
+        send(W, append(button(dfs))),
         load(1),
         title.
         %send(W, default_button(ok)).
@@ -64,6 +66,13 @@ back(_) :->
         "Go back button"::
         go(back, jogador),
         cur.
+
+dfs(_) :->
+        "depth first search in the map"::
+        posicao(jogador,X,Y),
+        heading(jogador,Heading),
+        dfs(X,Y,Heading,[],H,End),
+        run(End).
 
 cur :-
     current(jogador),
