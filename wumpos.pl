@@ -1,13 +1,15 @@
 :- use_module(library(readln)).
 :- include('colorLife.pl').
 :- include('move.pl').
+:- include('sound.pl').
 %:- include('inputUserHandler.pl').    <- still in beta
 
 wumpos :- 
-        load(3),
+        load(1),
         title,
         tutorial,
-        ask.
+        ask,
+        playSound('sound.wav').
 
 ask :- 
     write('Type command: '),
@@ -48,19 +50,48 @@ process('end_of_file') :- abort.
 process(Y) :-
            checkInput(Y),
            go(Y, jogador),
-           current(jogador),(
+           current(jogador),
+           moveMonster,(
            \+check(jogador),
            set(jogador),
            start('start')
            ;           
            start('start')).
 
+checkMonster(Agent):-
+                   monsterAround(Agent),
+                   Text = 'Você sente um odor pútrido vindo das redondezas',
+                   fancyWrite(yellow,Text),nl.
+
+checkMonster(Agent):-
+                   monsterHere(Agent),
+                   Text = 'VOCE PERDEU',
+                   fancyWrite(red, Text),nl,
+                   abort.
+checkMonster(_).
+
+plankCheck(Agent):-
+                  plankHere(Agent),
+                  Text = 'Apos vasculhar essa sala voce encontrou uma TASBOA',
+                  fancyWrite(blue, Text),nl,
+                  Text1 = 'Uma TASBOA foi adicionada a seu inventario',
+                  fancyWrite(green, Text1),nl.
+plankCheck(_).
+
+holeCheck(Agent):-
+                 holeHere(Agent),
+                 Text = 'There is a hole on the ground ',
+                 fancyWrite(yellow, Text),
+                 Text1 = 'YOU SHALL NOT PASS!!!',
+                 fancyWrite(red, Text1),nl.
+
+holeCheck(_).
+
 checkInput('left').
 checkInput('right').
 checkInput('front').
 checkInput('back').
 checkInput(_) :-
-         write('Huh?... are you mentally challenged?'),
          nl,
          start('start').
 load(0).
@@ -109,8 +140,8 @@ choice('yes') :-
               F = ' ALONE ',
               G = 'in this maze',
               H = ' as soon as you are ready type start, and the game shall begin',
-              I = ' if you feel like giving up like the little bitch you are just type quit, and thats it for the tutorial', 
-              J = ' (as soon as the misterious man finishes talking he disapears in the air) ',
+              I = ' if you feel like giving up just type quit, and thats it for the tutorial', 
+              J = ' (as soon as the misterious voice finishes talking it fades into silence) ',
               fancyWrite(red, A),
               fancyWrite(black, B),
               fancyWrite(red, C),
@@ -128,8 +159,12 @@ choice('no').
 
 choice('quit') :-
                 abort.
+
+choice('start') :-
+                 start('start').
+
 choice(_) :-
-           write('Huh ?, cant you even answer such a simple question ?'),
+           write('Huh ?, can\'t you even answer such a simple question ?'),
            nl,
            tutorial. 
 

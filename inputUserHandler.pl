@@ -1,4 +1,6 @@
 :- use_module(library(pce)).
+:- include('wumpos.pl').
+:- include('ia.pl').
 
 
 
@@ -9,15 +11,19 @@
 initialise(W, Label:[name]) :->
         "Initialise the window and fill it"::
         send_super(W, initialise(Label)),
-        send(W, append(text_item(name))),
-        send(W, append(button(ok))),
-        send(W, append(button(quit))),
-        send(W, append(button(test))),
+        %send(W, append(text_item(name))),
+        %send(W, append(button(ok))),
+        send(W, append(button(start))),
+        send(W, append(button(look))),
         send(W, append(button(left))),
         send(W, append(button(right))),
         send(W, append(button(front))),
         send(W, append(button(back))),
-        send(W, default_button(ok)).
+        send(W, append(button(quit))),
+        send(W, append(button(dfs))),
+        load(1),
+        title.
+        %send(W, default_button(ok)).
         
 ok(W) :->
         "User pressed the OK button"::
@@ -25,11 +31,17 @@ ok(W) :->
         get(NameItem, selection, Typed),
         send(W, return, Typed).
 
+start(_) :->
+         "User pressed start button"::
+         title,
+         current(jogador).
+
+
 quit(W) :->
         "User pressed the quit button"::
         send(W, return(@nil)).
 
-test(_) :->
+look(_) :->
         "Testing implementing a new button"::
         current(jogador).
         % send(W, return('noice')).
@@ -55,8 +67,16 @@ back(_) :->
         go(back, jogador),
         cur.
 
+dfs(_) :->
+        "depth first search in the map"::
+        posicao(jogador,X,Y),
+        heading(jogador,Heading),
+        dfs(X,Y,Heading,[],H,End),
+        run(End).
+
 cur :-
     current(jogador),
+    moveMonster,
     set(jogador).
 
 
@@ -126,7 +146,7 @@ event(B, Ev:event) :->
         ).
 :- pce_end_class.
 
-startt :- get(name_asker('Register'), prompt, Name).
+startt :- get(name_asker('WUMPOS 1.0'), prompt, Name).
 
 
  

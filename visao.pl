@@ -1,10 +1,10 @@
 :- include('inputFileHandler.pl').
 pegar(PosX,PosY,Size,R):-
-	R is PosX + (PosY * Size),
-	PosX < Size,
-	PosY < Size,
-	PosX >= 0,
-	PosY >= 0.
+    R is PosX + (PosY * Size),
+    PosX < Size,
+    PosY < Size,
+    PosX >= 0,
+    PosY >= 0.
 pegar(_,_,_,-1).
 
 pegarBack(PosX,PosY,Size,R):- PosY1 is PosY-1, pegar(PosX,PosY1,Size,R).
@@ -21,48 +21,74 @@ info(Counter,[_|Tail],Rest):- NewCounter is Counter-1,info(NewCounter,Tail,Rest)
 steps(front,0).  
 steps(left,3).  
 steps(back,2).                   
-steps(right,1). 			    
+steps(right,1).                 
 
 adjacente(PosX,PosY,Size,R):-
-	    pegarBack(PosX,PosY,Size,Back),
-	    pegarFront(PosX,PosY,Size,Front),
-	    pegarLeft(PosX,PosY,Size,Left),
-	    pegarRight(PosX,PosY,Size,Right),
-	    R = [Back,Right,Front,Left],!.
+        pegarBack(PosX,PosY,Size,Back),
+        pegarFront(PosX,PosY,Size,Front),
+        pegarLeft(PosX,PosY,Size,Left),
+        pegarRight(PosX,PosY,Size,Right),
+        R = [Back,Right,Front,Left],!.
 
 infoAdjacente([Back,Right,Front,Left],R):-
-	matriz(Maze),
-	info(Back,Maze,BackInfo),
-	info(Right,Maze,RightInfo),
-	info(Front,Maze,FrontInfo),
-	info(Left,Maze,LeftInfo),
-	R = [BackInfo,RightInfo,FrontInfo,LeftInfo],!.
+    matriz(Maze),
+    info(Back,Maze,BackInfo),
+    info(Right,Maze,RightInfo),
+    info(Front,Maze,FrontInfo),
+    info(Left,Maze,LeftInfo),
+    R = [BackInfo,RightInfo,FrontInfo,LeftInfo],!.
 
 grabTail([H|T],H,T).
 fix(Agent,[H|T],Answer):-
-	heading(Agent,Heading),
-	steps(Heading,Steps),
-	rotate(Steps,[H|T],_,Answer).
+    heading(Agent,Heading),
+    steps(Heading,Steps),
+    rotate(Steps,[H|T],_,Answer).
 
 rotate(0,[H|T],[H|T],[H|T]).
 rotate(Counter,[H|T],Ans,Curr):- append(T,[H],Ans), Next is Counter-1,rotate(Next,Ans,_,Curr).
 rotate(_,_,_,_).
 
 monsterHere(Agent):-
-	posicao(Agent,PosX,PosY),
-	posicao(monstro,PosX,PosY).
+    posicao(Agent,PosX,PosY),
+    posicao(monstro,PosX,PosY).
+
+monsterAround(Agent):-
+    size(Size),
+    posicao(Agent,PosX,PosY),
+    adjacente(PosX,PosY,Size,R),
+    posicao(monstro,MonsX,MonsY),
+    pegar(MonsX,MonsY,Size,R1),
+    member(R1,R).
+
+holeHere(Agent):-
+               posicao(Agent,PosX,PosY),
+               posicao(hole, PosX,PosY).
+
+plankHere(Agent):-
+                posicao(Agent,PosX,PosY),
+                posicao(plank,PosX,PosY),
+                inventory(jogador,X),
+                X1 is X + 1,
+                retract(inventory(jogador,X)),
+                assertz(inventory(jogador,X1)),
+                retract(posicao(plank,PosX,PosY)).
 
 current(Agent):-  posicao(Agent,PosX,PosY),
-	   size(Size),
-	   adjacente(PosX,PosY,Size,IndAdjacentes),
-	   infoAdjacente(IndAdjacentes,Adjacentes),
-	   fix(Agent,Adjacentes,Perspective),
-	   (check(Agent),append(Perspective,[v],PerspectiveV),atomic_list_concat(PerspectiveV, '', Atom)
-	   ;
-	   (monsterHere(jogador),append(Perspective,[m],PerspectiveM),atomic_list_concat(PerspectiveM, '', Atom))
-	   ;
-	   atomic_list_concat(Perspective, '',Atom)),
-	   atom_string(Atom, String),
-	   cls,
-	   fRead(String),
-	   !.
+       size(Size),
+       adjacente(PosX,PosY,Size,IndAdjacentes),
+       infoAdjacente(IndAdjacentes,Adjacentes),
+       fix(Agent,Adjacentes,Perspective),
+       (check(Agent),append(Perspective,[v],PerspectiveV),atomic_list_concat(PerspectiveV, '', Atom)
+       ;
+       (monsterHere(jogador),append(Perspective,[m],PerspectiveM),atomic_list_concat(PerspectiveM, '', Atom))
+       ;
+       (checkPlank(Agent),append(Perspective,[g],PerspectiveG),atomic_list_concat(PerspectiveG,'', Atom))
+       ;
+       atomic_list_concat(Perspective, '',Atom)),
+       atom_string(Atom, String),
+       cls,
+       fRead(String),
+    %  holeCheck(Agent),
+       checkMonster(Agent),
+       plankCheck(Agent),
+       !.
