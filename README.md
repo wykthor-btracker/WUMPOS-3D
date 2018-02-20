@@ -37,4 +37,4 @@ Projeto de prolog
 		    ordUnion(X, Y, Union).
         ```    
   ## Deadlines:
-        
+        SURPRIZE MOTHERFUCKER
