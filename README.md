@@ -36,5 +36,6 @@ Projeto de prolog
 		    ordUnionAll(Z, Sets1, Y, Sets),
 		    ordUnion(X, Y, Union).
         ```    
-  ## Deadlines:
-        SURPRIZE MOTHERFUCKER
+  ## TODO:
+     * Create a texture's folder and move all texture files into it, make the necessary changes in the code 
+        
