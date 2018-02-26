@@ -8,8 +8,8 @@ wumpos :-
         load(1),
         title,
         tutorial,
-        ask,
-        playSound('sound.wav').
+        ask.
+        %playSound('sound.wav'). <- currently unsuported, use with caution
 
 ask :- 
     write('Type command: '),
