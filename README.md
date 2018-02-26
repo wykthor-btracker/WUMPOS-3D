@@ -1,5 +1,5 @@
 # Wumpos 3D
-Wumpos 3D is a game made in prolog with a new approach to how we manipulate the players moviment, say goodbye to thousands of lines of code (:
+Wumpos 3D is a game made in prolog with a new approach to how we manipulate the players movement, say goodbye to thousands of lines of code (:
 
 ## Code style contract :
 
