@@ -1,5 +1,3 @@
-
-
 playSound(Sound):-
 		Player = 'aplay ',
 		string_concat(Player,Sound,Command),

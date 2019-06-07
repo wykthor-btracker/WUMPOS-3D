@@ -1,5 +1,0 @@
-IA with PROLOG:
-https://www.cs.ru.nl/~peterl/teaching/CS3510/prolmanual.pdf
-
-I. Bratko, PROLOG
-Programming for Artificial Intelligence, 3rd ed, Addison-Wesley, Harlow, 2001 

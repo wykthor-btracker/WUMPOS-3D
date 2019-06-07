@@ -2,7 +2,7 @@
 :- include('colorLife.pl').
 :- include('move.pl').
 :- include('sound.pl').
-%:- include('inputUserHandler.pl').    <- still in beta
+%:- include('void/inputUserHandler.pl').    <- still in beta
 
 wumpos :- 
         load(1),
