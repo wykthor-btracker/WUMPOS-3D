@@ -168,4 +168,5 @@ choice(_) :-
            nl,
            tutorial. 
 
-%start :- get(name_asker('Register'), prompt, Name), write(Name), nl.  
+%start :- get(name_asker('Register'), prompt, Name), write(Name), nl. 
+:- wumpos. 
